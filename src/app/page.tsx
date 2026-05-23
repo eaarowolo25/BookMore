@@ -64,7 +64,7 @@ const faqs = [
   {
     question: "Does this work with Acuity and Booksy?",
     answer:
-      "Yes. SignalFlow is configured around your existing booking workflow and communication stack.",
+      "Yes. BookMore is configured around your existing booking workflow and communication stack.",
   },
   {
     question: "Can I edit message copy later?",
@@ -134,7 +134,7 @@ export default function Home() {
     <div className="text-[var(--color-text-primary)]">
       <header className="sticky top-0 z-40 border-b border-[var(--color-border-soft)] bg-[rgba(250,250,249,0.86)] backdrop-blur-xl">
         <div className="container-shell flex h-18 items-center justify-between">
-          <span className="text-lg font-semibold tracking-tight">SignalFlow</span>
+          <span className="text-lg font-semibold tracking-tight">BookMore</span>
           <div className="flex items-center gap-6">
             <nav className="hidden gap-5 text-sm text-[var(--color-text-secondary)] md:flex">
               {navItems.map((item) => (
@@ -166,7 +166,7 @@ export default function Home() {
                   Turn every booking into repeat revenue.
                 </h1>
                 <p className="mt-6 max-w-xl text-lg text-[var(--color-text-secondary)]">
-                  SignalFlow automates reminders, review requests, and rebooking outreach so you keep chairs full without daily follow-up work.
+                  BookMore automates reminders, review requests, and rebooking outreach so you keep chairs full without daily follow-up work.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <button
@@ -362,7 +362,7 @@ export default function Home() {
       <footer className="border-t border-[var(--color-border-soft)] bg-white/75 py-10">
         <div className="container-shell grid gap-8 text-sm text-[var(--color-text-secondary)] md:grid-cols-4">
           <div>
-            <p className="font-semibold text-[var(--color-text-primary)]">SignalFlow</p>
+            <p className="font-semibold text-[var(--color-text-primary)]">BookMore</p>
             <p className="mt-2">Automated client communication for local service businesses.</p>
           </div>
           <div>
@@ -372,12 +372,12 @@ export default function Home() {
           </div>
           <div>
             <p className="font-semibold text-[var(--color-text-primary)]">Contact</p>
-            <p className="mt-2">hello@signalflow.io</p>
+            <p className="mt-2">hello@bookmore.io</p>
             <p>Instagram</p>
           </div>
           <div>
             <p className="font-semibold text-[var(--color-text-primary)]">Legal</p>
-            <p className="mt-2">© {new Date().getFullYear()} SignalFlow</p>
+            <p className="mt-2">© {new Date().getFullYear()} BookMore</p>
           </div>
         </div>
       </footer>

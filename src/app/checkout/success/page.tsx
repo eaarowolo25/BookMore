@@ -14,7 +14,7 @@ export default function CheckoutSuccessPage() {
             <Link href="/" className="rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-accent)] shadow-[var(--shadow-md)] transition hover:bg-[var(--color-primary-hover)]">
               Back to Home
             </Link>
-            <a href="mailto:hello@signalflow.io" className="rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold">
+            <a href="mailto:hello@bookmore.io" className="rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold">
               Contact Support
             </a>
           </div>
