@@ -13,10 +13,10 @@ const navItems = [
 ];
 
 const trustItems = [
-  { name: "Acuity", src: "https://logo.clearbit.com/acuityscheduling.com" },
-  { name: "Booksy", src: "https://logo.clearbit.com/booksy.com" },
-  { name: "Twilio", src: "https://logo.clearbit.com/twilio.com" },
-  { name: "Stripe", src: "https://logo.clearbit.com/stripe.com" },
+  { name: "Acuity", src: "/Images/Logos/Acuity_Scheduling_Logo.svg" },
+  { name: "Booksy", src: "/Images/Logos/Booksy_Logo.svg" },
+  { name: "Twilio", src: "/Images/Logos/960px-Twilio-logo-red.svg.png" },
+  { name: "Stripe", src: "/Images/Logos/960px-Stripe_Logo,_revised_2016.svg.png" },
 ];
 
 const outcomes = [
@@ -220,7 +220,7 @@ export default function Home() {
                     alt={`${logo.name} logo`}
                     width={112}
                     height={28}
-                    className="h-7 w-auto opacity-80 grayscale"
+                    className="h-7 w-auto"
                   />
                 </div>
               ))}
