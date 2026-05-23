@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --color-background: #f8f7f4;
+  --color-surface: #ffffff;
+  --color-text-primary: #111014;
+  --color-text-secondary: #4a4a56;
+  --color-text-muted: #706f7b;
+  --color-border: #d7d5cf;
+  --color-border-soft: #ebe8e1;
+  --color-primary: #0b5fff;
+  --color-primary-hover: #0a4fce;
+  --color-primary-soft: #e7edff;
+  --color-success: #15803d;
+  --shadow-md: rgba(20, 20, 36, 0.12) 0 14px 36px;
+  --shadow-subtle: rgba(16, 24, 40, 0.06) 0 1px 2px;
+}
+
+@theme inline {
+  --font-sans: var(--font-ui);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(11, 95, 255, 0.12), transparent 42%),
+    radial-gradient(circle at 90% 15%, rgba(11, 95, 255, 0.08), transparent 36%),
+    linear-gradient(var(--color-background), var(--color-background));
+  color: var(--color-text-primary);
+  font-family: var(--font-ui), sans-serif;
+}
+
+section {
+  scroll-margin-top: 96px;
+}
+
+.container-shell {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.card-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 24px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.hero-grid {
+  background-image: linear-gradient(rgba(215, 213, 207, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(215, 213, 207, 0.3) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.text-display {
+  font-family: var(--font-display), serif;
+}
+
+@media (max-width: 1024px) {
+  .container-shell {
+    width: min(1200px, calc(100% - 1.5rem));
+  }
+}
