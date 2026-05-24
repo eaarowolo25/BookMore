@@ -20,27 +20,47 @@
   --font-sans: var(--font-ui);
 }
 
-html {
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 body {
   margin: 0;
+  padding: 0;
   background:
     radial-gradient(circle at 10% 0%, rgba(11, 95, 255, 0.12), transparent 42%),
     radial-gradient(circle at 90% 15%, rgba(11, 95, 255, 0.08), transparent 36%),
     linear-gradient(var(--color-background), var(--color-background));
   color: var(--color-text-primary);
   font-family: var(--font-ui), sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 section {
   scroll-margin-top: 96px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .container-shell {
-  width: min(1200px, calc(100% - 2rem));
+  width: 100%;
+  max-width: 1280px;
   margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-shell {
+    padding-inline: 1.25rem;
+  }
 }
 
 .card-surface {
@@ -58,10 +78,4 @@ section {
 
 .text-display {
   font-family: var(--font-display), serif;
-}
-
-@media (max-width: 1024px) {
-  .container-shell {
-    width: min(1200px, calc(100% - 1.5rem));
-  }
 }

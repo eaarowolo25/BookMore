@@ -11,7 +11,7 @@ export default function CheckoutSuccessPage() {
             Your subscription is active. Our team will contact you shortly to connect your booking software and launch your automation flows.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/" className="rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-accent)] shadow-[var(--shadow-md)] transition hover:bg-[var(--color-primary-hover)]">
+            <Link href="/" className="rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-md)] transition hover:bg-[var(--color-primary-hover)]">
               Back to Home
             </Link>
             <a href="mailto:hello@bookmore.io" className="rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold">

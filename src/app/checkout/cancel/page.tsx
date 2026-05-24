@@ -11,7 +11,7 @@ export default function CheckoutCancelPage() {
             You can restart checkout anytime when you are ready. Your setup plan and pricing remain the same.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/" className="rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-accent)] shadow-[var(--shadow-md)] transition hover:bg-[var(--color-primary-hover)]">
+            <Link href="/" className="rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-md)] transition hover:bg-[var(--color-primary-hover)]">
               Start Automation Setup
             </Link>
             <Link href="/#faq" className="rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold">
