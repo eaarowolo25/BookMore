@@ -15,7 +15,10 @@ export async function POST(req: Request) {
     
     if (!priceId) {
       console.error("Missing priceId in request body");
-      return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+      return NextResponse.json({ 
+        error: "Missing priceId", 
+        details: "The Price ID was not provided in the request. Please ensure NEXT_PUBLIC_STRIPE_MONTHLY_ID and NEXT_PUBLIC_STRIPE_ANNUAL_ID are set in your environment variables and the site is redeployed." 
+      }, { status: 400 });
     }
 
     const stripeSecretKey = requiredEnv("STRIPE_SECRET_KEY");

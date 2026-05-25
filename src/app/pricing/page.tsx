@@ -26,6 +26,11 @@ export default function PricingPage() {
 
     try {
       const priceId = process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID;
+      
+      if (!priceId) {
+        throw new Error("Stripe Price ID is not configured. Please check your environment variables and redeploy.");
+      }
+
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

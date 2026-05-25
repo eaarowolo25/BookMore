@@ -102,6 +102,12 @@ export default function Home() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const startCheckout = async (priceId: string) => {
+    if (!priceId) {
+      console.error("Stripe Price ID is missing. Check NEXT_PUBLIC_STRIPE_MONTHLY_ID in Vercel.");
+      alert("Configuration Error: Stripe Price ID is not defined. If you just added the environment variables, please redeploy your site on Vercel.");
+      return;
+    }
+    
     if (isCheckingOut) return;
     setIsCheckingOut(true);
     try {
@@ -111,9 +117,14 @@ export default function Home() {
         body: JSON.stringify({ priceId })
       });
       const payload = await response.json();
-      if (payload.url) window.location.href = payload.url;
+      if (payload.url) {
+        window.location.href = payload.url;
+      } else {
+        throw new Error(payload.error || "Checkout failed");
+      }
     } catch (e) {
       console.error(e);
+      alert(e instanceof Error ? e.message : "An unexpected error occurred during checkout.");
       setIsCheckingOut(false);
     }
   };
