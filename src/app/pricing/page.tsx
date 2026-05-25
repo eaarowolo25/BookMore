@@ -36,10 +36,11 @@ export default function PricingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ priceId }),
       });
-      const payload = (await response.json()) as { error?: string; url?: string };
+      const payload = (await response.json()) as { error?: string; details?: string; url?: string };
 
       if (!response.ok || !payload.url) {
-        throw new Error(payload.error || "Unable to start checkout.");
+        const errorDetail = payload.details ? `\n\nDetails: ${payload.details}` : "";
+        throw new Error((payload.error || "Unable to start checkout.") + errorDetail);
       }
 
       window.location.href = payload.url;

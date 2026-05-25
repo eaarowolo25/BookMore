@@ -120,7 +120,8 @@ export default function Home() {
       if (payload.url) {
         window.location.href = payload.url;
       } else {
-        throw new Error(payload.error || "Checkout failed");
+        const detail = payload.details ? `\n\nStripe says: ${payload.details}` : "";
+        throw new Error((payload.error || "Checkout failed") + detail);
       }
     } catch (e) {
       console.error(e);
