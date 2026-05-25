@@ -11,11 +11,27 @@ function requiredEnv(name: string): string {
 export async function POST(req: Request) {
   try {
     const { priceId } = await req.json();
-    if (!priceId) return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+    console.log("Checkout request received for priceId:", priceId);
+    
+    if (!priceId) {
+      console.error("Missing priceId in request body");
+      return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+    }
 
     const stripeSecretKey = requiredEnv("STRIPE_SECRET_KEY");
-    const appUrl = requiredEnv("NEXT_PUBLIC_APP_URL");
+    let appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    
+    // Fallback for Vercel environments
+    if (!appUrl || appUrl.includes("localhost")) {
+      if (process.env.VERCEL_URL) {
+        appUrl = `https://${process.env.VERCEL_URL}`;
+      } else if (!appUrl) {
+        appUrl = "http://localhost:3000";
+      }
+    }
 
+    console.log("Using APP_URL:", appUrl);
+    console.log("Stripe Secret Key present:", !!stripeSecretKey);
     // Construct form data using Stripe's expected format for custom fields
     const body = new URLSearchParams();
     body.set("mode", "subscription");
@@ -50,12 +66,15 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error("Stripe API error:", errorText);
       return NextResponse.json({ error: "Stripe checkout session creation failed", details: errorText }, { status: 502 });
     }
 
     const session = (await response.json()) as { url?: string };
+    console.log("Stripe session created successfully:", !!session.url);
 
     if (!session.url) {
+      console.error("Stripe session URL missing in response");
       return NextResponse.json({ error: "Stripe checkout URL missing from response" }, { status: 502 });
     }
 

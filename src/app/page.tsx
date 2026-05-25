@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 // --- Components ---
 
-function FadeIn({ children, delay = 0, direction = "up", className = "" }: { children: React.ReactNode; delay?: number; direction?: "up" | "down" | "left" | "right" | "none"; className?: string }) {
+export function FadeIn({ children, delay = 0, direction = "up", className = "" }: { children: React.ReactNode; delay?: number; direction?: "up" | "down" | "left" | "right" | "none"; className?: string }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function FadeIn({ children, delay = 0, direction = "up", className = "" }: { chi
   );
 }
 
-function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`container-shell ${className}`}>{children}</div>;
 }
 

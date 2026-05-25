@@ -25,7 +25,12 @@ export default function PricingPage() {
     setIsCheckingOut(true);
 
     try {
-      const response = await fetch("/api/checkout", { method: "POST" });
+      const priceId = process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID;
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId }),
+      });
       const payload = (await response.json()) as { error?: string; url?: string };
 
       if (!response.ok || !payload.url) {
