@@ -49,13 +49,11 @@ export async function POST(req: Request) {
     body.set("custom_fields[0][label][type]", "custom");
     body.set("custom_fields[0][label][custom]", "Company Name");
     body.set("custom_fields[0][type]", "text");
-    body.set("custom_fields[0][text][required]", "true");
 
     body.set("custom_fields[1][key]", "calendly_link");
     body.set("custom_fields[1][label][type]", "custom");
     body.set("custom_fields[1][label][custom]", "Your Calendly Booking Link");
     body.set("custom_fields[1][type]", "text");
-    body.set("custom_fields[1][text][required]", "true");
 
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
