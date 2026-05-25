@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "BookMore | Automated Client Communication",
+  title: "BookMore | Premium Automated Client Communication",
   description:
     "Reduce no-shows and automate reminders, reviews, and rebooking for salons, barbers, and aesthetics clinics.",
 };
