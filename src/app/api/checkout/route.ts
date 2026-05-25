@@ -8,20 +8,35 @@ function requiredEnv(name: string): string {
   return value;
 }
 
-export async function POST() {
+export async function POST(req: Request) {
   try {
+    const { priceId } = await req.json();
+    if (!priceId) return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+
     const stripeSecretKey = requiredEnv("STRIPE_SECRET_KEY");
-    const stripePriceId = requiredEnv("STRIPE_PRICE_ID");
     const appUrl = requiredEnv("NEXT_PUBLIC_APP_URL");
 
-    const params = new URLSearchParams();
-    params.set("mode", "subscription");
-    params.set("success_url", `${appUrl}/checkout/success`);
-    params.set("cancel_url", `${appUrl}/checkout/cancel`);
-    params.set("line_items[0][price]", stripePriceId);
-    params.set("line_items[0][quantity]", "1");
-    params.set("billing_address_collection", "required");
-    params.set("allow_promotion_codes", "true");
+    // Construct form data using Stripe's expected format for custom fields
+    const body = new URLSearchParams();
+    body.set("mode", "subscription");
+    body.set("success_url", `${appUrl}/checkout/success`);
+    body.set("cancel_url", `${appUrl}/checkout/cancel`);
+    body.set("line_items[0][price]", priceId);
+    body.set("line_items[0][quantity]", "1");
+    body.set("billing_address_collection", "required");
+    
+    // Add Custom Fields for Calendly/Onboarding
+    body.set("custom_fields[0][key]", "company_name");
+    body.set("custom_fields[0][label][type]", "custom");
+    body.set("custom_fields[0][label][custom]", "Company Name");
+    body.set("custom_fields[0][type]", "text");
+    body.set("custom_fields[0][text][required]", "true");
+
+    body.set("custom_fields[1][key]", "calendly_link");
+    body.set("custom_fields[1][label][type]", "custom");
+    body.set("custom_fields[1][label][custom]", "Your Calendly Booking Link");
+    body.set("custom_fields[1][type]", "text");
+    body.set("custom_fields[1][text][required]", "true");
 
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
@@ -29,7 +44,7 @@ export async function POST() {
         Authorization: `Bearer ${stripeSecretKey}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: params,
+      body: body,
       cache: "no-store",
     });
 

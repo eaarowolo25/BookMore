@@ -101,11 +101,15 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const startCheckout = async () => {
+  const startCheckout = async (priceId: string) => {
     if (isCheckingOut) return;
     setIsCheckingOut(true);
     try {
-      const response = await fetch("/api/checkout", { method: "POST" });
+      const response = await fetch("/api/checkout", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId })
+      });
       const payload = await response.json();
       if (payload.url) window.location.href = payload.url;
     } catch (e) {
@@ -124,7 +128,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             {/* Mobile CTA */}
             <button
-              onClick={startCheckout}
+              onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID || "")}
               disabled={isCheckingOut}
               className="md:hidden rounded-full bg-[var(--color-primary)] px-4 py-2 text-xs font-bold text-white shadow-md transition hover:bg-[var(--color-primary-hover)] disabled:opacity-70"
             >
@@ -138,7 +142,7 @@ export default function Home() {
                 </a>
               ))}
               <button
-                onClick={startCheckout}
+                onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID || "")}
                 disabled={isCheckingOut}
                 className="rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[var(--color-primary-hover)] disabled:opacity-70"
               >
@@ -166,7 +170,7 @@ export default function Home() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center lg:items-start">
                 <button
-                  onClick={startCheckout}
+                  onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID || "")}
                   disabled={isCheckingOut}
                   className="w-full sm:w-auto rounded-full bg-[var(--color-primary)] px-8 py-4 text-base font-semibold text-white shadow-xl transition hover:scale-105 active:scale-95 disabled:opacity-70"
                 >
@@ -545,37 +549,58 @@ export default function Home() {
               </p>
             </FadeIn>
             
-            <FadeIn delay={0.2} className="flex justify-center w-full">
-              <div className="card-surface max-w-xl w-full p-8 md:p-12 text-center shadow-[var(--shadow-md)] relative overflow-hidden bg-[var(--color-surface)] rounded-[30px] mx-auto">
-                <p className="text-sm font-bold uppercase tracking-widest text-[var(--color-text-muted)] text-center">All-In-One Plan</p>
-                <div className="mt-6 flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold">£49</span>
-                  <span className="text-xl text-[var(--color-text-secondary)]">/month</span>
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {/* Monthly Plan */}
+              <FadeIn delay={0.1} className="flex justify-center w-full">
+                <div className="card-surface max-w-xl w-full p-8 md:p-12 text-center shadow-[var(--shadow-md)] bg-[var(--color-surface)] rounded-[30px]">
+                  <p className="text-sm font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Monthly</p>
+                  <div className="mt-6 flex items-baseline justify-center gap-2">
+                    <span className="text-5xl font-bold">£49</span>
+                    <span className="text-lg text-[var(--color-text-secondary)]">/mo</span>
+                  </div>
+                  <ul className="mt-8 space-y-4 text-left mx-auto max-w-[240px]">
+                    {["Reminder automations", "Review request flows", "Rebooking sequences", "Onboarding support"].map((item) => (
+                      <li key={item} className="flex items-center gap-3 font-medium">
+                        <span className="text-[var(--color-primary)] font-bold">✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID || "")}
+                    className="mt-10 w-full rounded-full border-2 border-[var(--color-primary)] py-4 font-bold text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition"
+                  >
+                    Start Monthly
+                  </button>
                 </div>
-                <ul className="mt-10 space-y-4 text-left max-w-none lg:max-w-[280px] mx-auto">
-                  {[
-                    "Reminder automations",
-                    "Review request flows",
-                    "Rebooking sequences",
-                    "Onboarding support",
-                    "Setup included",
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-lg font-medium text-[var(--color-text-primary)]">
-                      <span className="text-[var(--color-primary)] font-bold">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={startCheckout}
-                  disabled={isCheckingOut}
-                  className="mt-12 w-full rounded-full bg-[var(--color-primary)] py-5 text-xl font-bold text-white shadow-[var(--shadow-md)] transition hover:scale-105 active:scale-95 disabled:opacity-70"
-                >
-                  {isCheckingOut ? "Connecting..." : "Get My Setup"}
-                </button>
-                <p className="mt-6 text-sm text-[var(--color-text-muted)] text-center">SMS usage limits may apply. Cancel any time.</p>
-              </div>
-            </FadeIn>
+              </FadeIn>
+
+              {/* Annual Plan */}
+              <FadeIn delay={0.2} className="flex justify-center w-full">
+                <div className="card-surface max-w-xl w-full p-8 md:p-12 text-center shadow-[var(--shadow-md)] bg-[var(--color-surface)] rounded-[30px] relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-[var(--color-primary)] text-white text-xs font-bold px-4 py-1 rounded-bl-xl">SAVE 15%</div>
+                  <p className="text-sm font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Annual</p>
+                  <div className="mt-6 flex items-baseline justify-center gap-2">
+                    <span className="text-5xl font-bold">£400</span>
+                    <span className="text-lg text-[var(--color-text-secondary)]">/yr</span>
+                  </div>
+                  <ul className="mt-8 space-y-4 text-left mx-auto max-w-[240px]">
+                    {["All monthly features", "Priority setup", "Dedicated support", "Save £88 annually"].map((item) => (
+                      <li key={item} className="flex items-center gap-3 font-medium">
+                        <span className="text-[var(--color-primary)] font-bold">✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_ANNUAL_ID || "")}
+                    className="mt-10 w-full rounded-full border-2 border-[var(--color-primary)] py-4 font-bold text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition"
+                  >
+                    Get Annual Plan
+                  </button>
+                </div>
+              </FadeIn>
+            </div>
           </Container>
         </section>
 
@@ -627,7 +652,7 @@ export default function Home() {
               </p>
 
               <button
-                onClick={startCheckout}
+                onClick={() => startCheckout(process.env.NEXT_PUBLIC_STRIPE_MONTHLY_ID || "")}
                 disabled={isCheckingOut}
                 className="mt-12 rounded-full bg-[var(--color-primary)] px-10 py-5 text-xl font-bold text-white shadow-[var(--shadow-md)] transition hover:scale-105 active:scale-95 disabled:opacity-70"
               >
